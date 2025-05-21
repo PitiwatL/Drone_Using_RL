@@ -3,8 +3,6 @@ from typing import Tuple
 
 
 class Drone():
-
-
     def __init__(self):
         self.x = 0
         self.y = 0
@@ -28,7 +26,6 @@ class Drone():
         self.has_reached_target_last_update = False
     def add_target_coordinate(self, point: Tuple[float, float]):
         self.target_coordinates.append(point)
-
     
     def get_pitch(self):
         return self.pitch

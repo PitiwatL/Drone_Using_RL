@@ -7,8 +7,8 @@ class HeuristicController(FlightController):
 
 
     def __init__(self):
-        """Creates a heuristic flight controller with some specified parameters
-
+        """
+         Creates a heuristic flight controller with some specified parameters
         """
 
         self.ky = 1.0
