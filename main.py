@@ -39,6 +39,11 @@ def convert_to_game_coordinates(x,y):
     scale = get_scale()
     return ((x - SCREEN_WIDTH/2)/scale, (y - SCREEN_HEIGHT/2)/scale)
 
+def status(controller: FlightController) :
+    pass
+
+
+
 def main(controller: FlightController):
 
     # Initialise pygame
@@ -90,15 +95,20 @@ def main(controller: FlightController):
         pygame.display.flip()
 
         # Makes sure that the simulation runs at a target 60FPS
-        clock.tick(60)
+        # speed up the simulation
+        clock.tick(500)
 
         # Checks whether to reset the current drone
         simulation_step_counter+=1
-        if (simulation_step_counter>max_simulation_steps):
-            drone = controller.init_drone() # Reset the drone
+        if (simulation_step_counter>=max_simulation_steps):
+            drone = controller.init_drone(random = True) # Reset the drone
             simulation_step_counter = 0
 
-    
+        # # set if it reachs the target then stop
+        # if drone.has_reached_target_last_update == True :
+        #     drone = controller.init_drone(random = True) # Reset the drone
+        #     simulation_step_counter = 0
+        
 def draw_target(target_point, screen, target_img):
     target_size = convert_to_screen_size(0.1)
     point_x, point_y = convert_to_screen_coordinate(*target_point)

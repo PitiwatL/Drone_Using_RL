@@ -88,7 +88,7 @@ class Drone():
         target_point = self.get_next_target()
         distance_x = self.x - target_point[0]
         distance_y = self.y - target_point[1]
-        distance_to_target = np.sqrt(distance_x*distance_x+distance_y*distance_y)
+        distance_to_target = np.sqrt(distance_x**2+distance_y**2)
     
         if distance_to_target < self.game_target_size:
             if len(self.target_coordinates) > 0:

@@ -15,7 +15,8 @@ class HeuristicController(FlightController):
         self.abs_thrust_delta = 0.3
 
     def get_max_simulation_steps(self):
-            return 500 # You can alter the amount of steps you want your program to run for here
+            return 2000 
+    # You can alter the amount of steps you want your program to run for here
 
 
     def get_thrusts_heuristics(self, drone: Drone) -> Tuple[float, float]:

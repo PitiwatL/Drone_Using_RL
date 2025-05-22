@@ -1,12 +1,13 @@
 import numpy as np
 from drone import Drone
 from typing import Tuple
+import numpy as np
 
 
 class FlightController():
     @classmethod
     def get_max_simulation_steps(self):
-        return 500
+        return 10000
     @classmethod
     def get_time_interval(self):
         return 0.01
@@ -32,7 +33,7 @@ class FlightController():
         pass
 
     @classmethod
-    def init_drone(self) -> Drone:
+    def init_drone(self, random = False) -> Drone:
         """Creates a Drone object initialised with a deterministic set of target coordinates.
 
         Returns:
@@ -41,10 +42,16 @@ class FlightController():
 
         # This is used to set up the coordinate
         drone = Drone()
-        drone.add_target_coordinate((0.3, 0.3))
-        drone.add_target_coordinate((-0.3, 0.3))
-        drone.add_target_coordinate((-0.3, -0.3))
-        drone.add_target_coordinate((-0.3, 0.3))
+        if random == False: 
+            drone.add_target_coordinate((0.3, 0.3))
+            drone.add_target_coordinate((-0.3, 0.3))
+            drone.add_target_coordinate((-0.3, -0.3))
+            drone.add_target_coordinate((-0.3, 0.3))
+        
+        if random: 
+            thrust1, thrust2 = np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5)
+            drone.add_target_coordinate(thrust1, thrust2)
+
         return drone
 
     @classmethod
