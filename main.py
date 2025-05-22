@@ -67,10 +67,13 @@ def main(controller: FlightController):
             if event.type == pygame.QUIT:
                 running = False
 
-
         # --- Begin Physics --- #
         # Get the thrust information from the controller
-        drone.set_thrust(controller.get_thrusts(drone))
+        drone.set_thrust(controller.get_thrusts_heuristics(drone))
+        print(controller.get_thrusts_heuristics(drone))
+        # print(drone.x, drone.y)
+
+
         # Update the simulation
         drone.step_simulation(delta_time)
 
@@ -96,7 +99,6 @@ def main(controller: FlightController):
             simulation_step_counter = 0
 
     
-
 def draw_target(target_point, screen, target_img):
     target_size = convert_to_screen_size(0.1)
     point_x, point_y = convert_to_screen_coordinate(*target_point)
@@ -114,7 +116,6 @@ def draw_drone(screen: pygame.Surface, drone: Drone, drone_img: pygame.Surface):
     screen.blit(rotated_drone_img, drone_scaled_rect)
 
 if __name__ == "__main__":
-
     controller = generate_controller()
     if is_training():
         controller.train()

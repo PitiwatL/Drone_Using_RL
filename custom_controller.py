@@ -3,7 +3,6 @@ from drone import Drone
 from typing import Tuple
 
 class CustomController(FlightController):
-
     def __init__(self):
         pass
     def train(self):

@@ -4,7 +4,6 @@ from typing import Tuple
 
 
 class FlightController():
-
     @classmethod
     def get_max_simulation_steps(self):
         return 500
@@ -39,11 +38,13 @@ class FlightController():
         Returns:
             Drone: An initial drone object with some programmed target coordinates.
         """
+
+        # This is used to set up the coordinate
         drone = Drone()
-        drone.add_target_coordinate((0.35, 0.3))
-        drone.add_target_coordinate((-0.35, 0.4))
-        drone.add_target_coordinate((0.5, -0.4))
-        drone.add_target_coordinate((-0.35, 0))
+        drone.add_target_coordinate((0.3, 0.3))
+        drone.add_target_coordinate((-0.3, 0.3))
+        drone.add_target_coordinate((-0.3, -0.3))
+        drone.add_target_coordinate((-0.3, 0.3))
         return drone
 
     @classmethod

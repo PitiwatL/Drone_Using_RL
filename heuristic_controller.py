@@ -4,8 +4,6 @@ from drone import Drone
 from typing import Tuple
 
 class HeuristicController(FlightController):
-
-
     def __init__(self):
         """
          Creates a heuristic flight controller with some specified parameters
@@ -17,10 +15,10 @@ class HeuristicController(FlightController):
         self.abs_thrust_delta = 0.3
 
     def get_max_simulation_steps(self):
-            return 3000 # You can alter the amount of steps you want your program to run for here
+            return 500 # You can alter the amount of steps you want your program to run for here
 
 
-    def get_thrusts(self, drone: Drone) -> Tuple[float, float]:
+    def get_thrusts_heuristics(self, drone: Drone) -> Tuple[float, float]:
         """Takes a given drone object, containing information about its current state
         and calculates a pair of thrust values for the left and right propellers.
 

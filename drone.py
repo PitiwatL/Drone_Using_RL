@@ -21,6 +21,8 @@ class Drone():
         self.mass = 1.0
         self.g = -1.0/self.mass
         self.t = 0
+
+        # hypothetical target size, this doesn't expand the image
         self.game_target_size = 0.1
 
         self.has_reached_target_last_update = False
@@ -87,6 +89,7 @@ class Drone():
         distance_x = self.x - target_point[0]
         distance_y = self.y - target_point[1]
         distance_to_target = np.sqrt(distance_x*distance_x+distance_y*distance_y)
+    
         if distance_to_target < self.game_target_size:
             if len(self.target_coordinates) > 0:
                 self.target_coordinates.pop(0)
