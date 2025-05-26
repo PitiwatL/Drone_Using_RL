@@ -35,10 +35,6 @@ class HeuristicController(FlightController):
             for _ in range(10000):
                 x_target, y_target = np.random.uniform(-0.5, 0.5), np.random.uniform(-0.5, 0.5)
                 drone.add_target_coordinate((x_target, y_target))
-                # drone.add_target_coordinate((0.4, 0.4))
-                # drone.add_target_coordinate((-0.4, 0.4))
-                # drone.add_target_coordinate((-0.4, -0.4))
-                # drone.add_target_coordinate((-0.4, 0.4))
 
         return drone
     
