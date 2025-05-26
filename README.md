@@ -4,7 +4,7 @@
 The objective function can be written below, using policy gradient:
 <div align="center">
 
-$ \nabla_\theta \mathcal{L}(\theta) = \sum_\omega p(\omega) \left[ \sum_{t=0}^{T(\omega)-1} \gamma^t R_t \right] \left[ \sum_{t'=0}^{T(\omega)-1} \nabla_\theta \log \pi_\theta(a_{t'} | s_{t'}) \right]$
+$\nabla_\theta \mathcal{L}(\theta) = \sum_\omega p(\omega) \left[ \sum_{t=0}^{T(\omega)-1} \gamma^t R_t \right] \left[ \sum_{t'=0}^{T(\omega)-1} \nabla_\theta \log \pi_\theta(a_{t'} | s_{t'}) \right]$
 
 </div>
 
