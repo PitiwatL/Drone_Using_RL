@@ -1,7 +1,14 @@
 # Continuous Action Space
 <img src="assets/drone_sample.gif" width="500" height="300"/>
 
-$$\nabla \cdot \vec{E} = \frac{\rho}{\varepsilon_0}$$
+$$
+\nabla_\theta \mathcal{L}(\theta)
+= \mathbb{E}_{\omega \sim \pi} \left[
+\left( \sum_{t=0}^{T(\omega)-1} \gamma^t R_t \right)
+\left( \sum_{t'=0}^{T(\omega)-1} \nabla_\theta \log \pi_\theta(a_{t'} | s_{t'}) \right)
+\right]
+$$
+
 
 
 # Drone Flight Controller, Project 9 MLiS Part I
