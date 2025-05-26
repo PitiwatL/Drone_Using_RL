@@ -1,5 +1,5 @@
 # Continuous Action Space
-![Alt Text](assets/drone_sample.gif)
+<img src="assets/drone_sample.gif" width="500" height="300"/>
 
 # Drone Flight Controller, Project 9 MLiS Part I
 
