@@ -4,8 +4,8 @@ from typing import Tuple
 
 class Drone():
     def __init__(self):
-        self.x = 0
-        self.y = 0
+        self.x = 0#np.random.uniform(-0.4, 0.4) # 0, np.random.uniform(-0.5, 0.5)
+        self.y = 0#np.random.uniform(-0.4, 0.4) # 0
         self.t = 0
         self.thrust_left = 0.5
         self.thrust_right = 0.5
@@ -23,7 +23,7 @@ class Drone():
         self.t = 0
 
         # hypothetical target size, this doesn't expand the image
-        self.game_target_size = 0.1
+        self.game_target_size = 0.15
 
         self.has_reached_target_last_update = False
     def add_target_coordinate(self, point: Tuple[float, float]):
@@ -41,7 +41,8 @@ class Drone():
 
     
     def get_next_target(self) -> Tuple[float, float]:
-        return (0,0) if len(self.target_coordinates)==0 else self.target_coordinates[0]
+        return self.target_coordinates[0]
+        # return (0,0) if len(self.target_coordinates)==0 else self.target_coordinates[0]
 
 
     def step_simulation(self, delta_time: float):
@@ -90,7 +91,7 @@ class Drone():
         distance_y = self.y - target_point[1]
         distance_to_target = np.sqrt(distance_x**2+distance_y**2)
     
-        if distance_to_target < self.game_target_size:
+        if distance_to_target <= self.game_target_size:
             if len(self.target_coordinates) > 0:
                 self.target_coordinates.pop(0)
                 self.has_reached_target_last_update = True

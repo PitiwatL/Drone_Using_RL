@@ -5,6 +5,7 @@ import numpy as np
 import math
 from typing import Tuple
 from flight_controller import FlightController
+from policy_grad import PolicyNet2Layer
 
 #---------------------WRITE YOUR OWN CODE HERE------------------------#
 from heuristic_controller import HeuristicController
@@ -44,7 +45,7 @@ def status(controller: FlightController) :
 
 
 
-def main(controller: FlightController):
+def main(controller: HeuristicController):
 
     # Initialise pygame
     pygame.init()
@@ -59,14 +60,23 @@ def main(controller: FlightController):
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     
     # Initalise the drone
-    drone = controller.init_drone()
-    
+    heuristic = HeuristicController()
+    drone = heuristic.init_drone(random = True)
+
     simulation_step_counter = 0
-    max_simulation_steps = controller.get_max_simulation_steps()
-    delta_time = controller.get_time_interval()
+    max_simulation_steps = heuristic.get_max_simulation_steps()
 
+    delta_time = heuristic.get_time_interval()
 
+    # model = PolicyNet2Layer()
+    states, actions, rewards = [], [], []
     running = True
+    num_episode = 0
+    count_reward = 0
+    hit_target_count = 0
+    load_weights = True
+    if load_weights == True:
+        heuristic.load_weights("drone_episode_1800_8801.7286.npz")
     while running:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -74,11 +84,17 @@ def main(controller: FlightController):
 
         # --- Begin Physics --- #
         # Get the thrust information from the controller
-        drone.set_thrust(controller.get_thrusts_heuristics(drone))
-        print(controller.get_thrusts_heuristics(drone))
-        # print(drone.x, drone.y)
+        # drone.set_thrust(controller.get_thrusts_heuristics(drone))
 
+        action, tuple_state, reached_target = heuristic.train(drone=drone, train = False)
 
+        drone.set_thrust(action)
+
+        # collect states, actions, values
+        states.append(tuple_state[0]) 
+        actions.append(tuple_state[1])
+        rewards.append(tuple_state[2])
+        
         # Update the simulation
         drone.step_simulation(delta_time)
 
@@ -94,21 +110,33 @@ def main(controller: FlightController):
         # Actually displays the final frame on the screen
         pygame.display.flip()
 
-        # Makes sure that the simulation runs at a target 60FPS
         # speed up the simulation
-        clock.tick(500)
+        clock.tick(80)
 
         # Checks whether to reset the current drone
-        simulation_step_counter+=1
-        if (simulation_step_counter>=max_simulation_steps):
-            drone = controller.init_drone(random = True) # Reset the drone
+        simulation_step_counter+=1    
+        if (simulation_step_counter>=max_simulation_steps) or reached_target or abs(drone.x) > 0.7 or abs(drone.y) > 0.7: 
+            num_episode += 1
+            # print("Num Episode: ", num_episode)
+            if reached_target :
+                hit_target_count +=1 
+
+            # sum_reward = heuristic.update_param(num_episode, states, actions, rewards)
+            # count_reward += sum_reward
+
+            # Reset the drone
+            states, actions, rewards = [], [], []
+            drone = heuristic.init_drone(random = True) 
             simulation_step_counter = 0
 
-        # # set if it reachs the target then stop
-        # if drone.has_reached_target_last_update == True :
-        #     drone = controller.init_drone(random = True) # Reset the drone
-        #     simulation_step_counter = 0
-        
+            if num_episode % 300 == 0 :
+                # print(count_reward)
+                # heuristic.save_weights(filename = f"drone_episode_{num_episode}_{count_reward:.4f}.npz")
+                count_reward = 0
+                print("Accuracy: ", hit_target_count/num_episode)
+                print("Save complete!")
+
+
 def draw_target(target_point, screen, target_img):
     target_size = convert_to_screen_size(0.1)
     point_x, point_y = convert_to_screen_coordinate(*target_point)
