@@ -1,5 +1,5 @@
 # Continuous Action Space
-![Alt Text](assets/animation.gif)
+![Alt Text](assets/drone_sample.gif)
 
 # Drone Flight Controller, Project 9 MLiS Part I
 
